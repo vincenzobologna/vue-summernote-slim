@@ -15,7 +15,48 @@ export default {
         }
       },
       mounted () {
-        $(this.$el).summernote()
+        //$(this.$el).summernote()
+
+        var self = this
+        var initOptions = {
+          lang: 'it-IT',
+          placeholder: self.placeholder,
+          height: self.height,
+          minHeight: self.minHeight,
+          maxHeight: self.maxHeight,
+          focus: self.focus,
+          callbacks: {
+            onInit: function () {
+              self.$emit('onInit')
+            },
+            onEnter: function () {
+              self.$emit('onEnter')
+            },
+            onFocus: function () {
+              self.$emit('onFocus')
+            },
+            onBlur: function () {
+              self.$emit('onBlur')
+            },
+            onKeyup: function (e) {
+              self.$emit('onKeyup', e)
+            },
+            onKeydown: function (e) {
+              self.$emit('onKeydown', e)
+            },
+            onPaste: function (e) {
+              self.$emit('onPaste', e)
+            },
+            onImageUpload: function (files) {
+              self.$emit('onImageUpload', files)
+            },
+            onChange: function (contents) {
+              self.$emit('onChange', contents)
+            }
+          }
+        }
+        var params = Object.assign({}, initOptions, options)
+        $(this.$el).summernote(params)
       },
       created () {
         $(this.$el).summernote()
